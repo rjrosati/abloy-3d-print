@@ -51,7 +51,7 @@ module key_shaft() {
                 cube([key_length,key_width,key_height ]);
             }
         }
-        
+
         // Tip chamfering
         diagonal_mirror() {
             face_chamfer();
@@ -126,14 +126,14 @@ module bit(position, cut) {
                     rotate([0,90,0]) cylinder(h=cut_width, r=cut_radius, center=true, $fn=100);
                 }
             }
-            
+
             if (cut < 6) { // Only cuts 1-5 have edge cuts
                 cut_angle = (cut == 1 || cut == 2 || cut == 4) ? cut_angle_1 : cut_angle_2;
-         
+
                 // Do bitting edge chamfers
                 leftCut = (cut == 1 || cut == 3 || cut == 4);
                 rightCut = (!leftCut || cut == 4);
-                
+
                 diagonal_mirror(leftCut, rightCut)
                     edge_chamfer(length=cut_width,angle=cut_angle,height=cut_chamfer_height,center=true);
             }
@@ -166,7 +166,7 @@ module diagonal_mirror(mirrorZ = false, alsoNonMirrorZ = false) {
         children();
         mirror([0,0,1]) mirror([0,1,0]) children();
     }
-    
+
     if (mirrorZ) {
         mirror([0,1,0]) children();
         mirror([0,0,1]) children();
@@ -210,7 +210,7 @@ module handle(label="") {
         translate([key_length-ramp_length,0,key_height/2])
             rotate([0,90,270])
                 prism(key_height,ramp_length,key_width/2);
-    
+
     height=key_height+5;
     length=12;
     keyring_rad = 2.3;
@@ -221,7 +221,7 @@ module handle(label="") {
                 rotate([0, 90, 90])
                     cylinder(h=key_width+extra*2, r=keyring_rad, $fn=100);
         }
-        
+
         translate([2.5, 0, height/2])
             rotate([90, 90, 0])
                 linear_extrude(height=key_width*0.2) text(label, size=2.5, halign="center");
@@ -237,19 +237,17 @@ module disklock(bitting=[],tip_cuts=[],tip_cut_all=false,label="") {
         for(i=[0:len(bitting)-1]) {
             bit(i, bitting[i]);
         }
-        
+
         // INn
-        dc_dimple(); 
-       
+        //dc_dimple();
+
         if (len(tip_cuts) > 0) {
             tip_warding(tip_cuts);
         }
-        
         if (tip_cut_all) {
             tip_master_cut();
         }
     }
-    
     handle(label=label);
 }
 
