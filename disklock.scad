@@ -254,4 +254,5 @@ module disklock(bitting=[],tip_cuts=[],tip_cut_all=false,label="") {
 }
 
 // Abloypart3.pdf Figure 11 key drawing
-disklock([4,6,1,4,2,3,1,3,5,2],tip_cuts=[0],tip_cut_all=true,label="Label 11");
+//disklock([4,6,1,4,2,3,1,3,5,2],tip_cuts=[0],tip_cut_all=true,label="Label 11");
+// If we leave this in, it breaks the example code...
